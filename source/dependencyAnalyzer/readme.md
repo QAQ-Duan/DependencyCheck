@@ -1,0 +1,2 @@
+# DependencyAnalyzer
+起步阶段，已大致完成Scanner和Dependency的设计和代码内容，待优化和完善。
