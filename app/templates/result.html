@@ -1,0 +1,11 @@
+{%extends 'upload.html'%}
+
+{%block body%}
+      <h1>This is a report</h1>
+      <h2>Packages imported</h2>
+      {% for content in contents%}
+            <text>{{content}}</text>
+      {% endfor %}
+      
+{%endblock%}
+
