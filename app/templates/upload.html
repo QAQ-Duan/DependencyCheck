@@ -1,22 +1,27 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <meta content="en-us" http-equiv="Content-Language">
    
    <meta name="viewport" content="width=device-width, initial-scale=0.9">
    <title id="title">Dependency analysis</title>
-   
+   {%block style%}
    <style>
+  
+    </style>
+   {%endblock%}
+   <style>
+    body {
+        text-align:center;
+         /* background-image:url('img/bg.jpg') !important;    */
+         background-repeat: no-repeat;
+         background-color: #ffffff;
+        }
    * {
       padding: 0;
       margin: 0;
    }
-   body {
-      text-align: center;
-       /* background-image:url('img/bg.jpg') !important;    */
-       background-repeat: no-repeat;
-       background-color: #ffffff;
-
-   }
+   
    
    #search_input {
       width: 90%;
@@ -358,25 +363,66 @@
       background-color: transparent;
       padding: 0 13px 0 13px
    }
-   
-   </style><style>html, * {-webkit-user-select:text!important; -moz-user-select:text!important;}</style></head>
+   .button {
+    position: relative;
+    background-color: #ffffff;
+	border:2px solid #008cba;
+    border-radius:8px;
+    font-size: 15px;
+    color:  #87cefa;
+    padding: 10px 20px;
+    margin: 4px 2px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+ 
+.button:after {
+    content: "";
+    background: #a9a9a9;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+ 
+.button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}  
+
+
+   </style><style>html, * {-webkit-user-select:text!important; -moz-user-select:text!important;}
+    
+   </style>
+</head>
 
    <body style="font-family: 蘋果儷細宋;background-color: #F5F5F5;">
    <canvas id="sakura" width="400" height="920"></canvas>
    <div id="content" style="z-index: 2;position: relative;">
-      {%block body%}
+    {%block body%}
    </br>
    </br>
    </br>
-      <h1>upload file</h1>
-      </br>
+      <h1>Home</h1>
+      <h2>此处上传</h2>
       </br>
       <form action = "uploader" method = "POST" enctype = "multipart/form-data">
-         <input type = "file" name = "file" />
-         <input type = "submit"/>
+         <input type = "file" name = "file" /></br></br>
+         <button type="submit" class="button" id="submit_file_button">上传压缩包或文件</button>
       </form>
       {%endblock%}
    </div>
+
    <script id="sakura_point_vsh" type="x-shader/x_vertex">
       uniform mat4 uProjection;
       uniform mat4 uModelview;
