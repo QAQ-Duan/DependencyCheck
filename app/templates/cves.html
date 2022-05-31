@@ -1,6 +1,15 @@
-{%extends 'upload.html'%}
-{%block style%}
-<style>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta content="en-us" http-equiv="Content-Language">
+   
+   <meta name="viewport" content="width=device-width, initial-scale=0.9">
+   <title id="title">Dependency analysis</title>
+    <style>
+        h1{
+            text-align:center;
+        }
       .header{
             width: 100%;
             height: 100px;
@@ -23,7 +32,7 @@
             height: 150px;
           }
           .header .list{
-            float: left;
+            float: center;
             width: 820px;
             height: 88px;
             padding: 12px 0 0 30px;
@@ -72,9 +81,10 @@
             text-align: start !important;
             text-align-last: start !important;
         }
-</style>
-{%endblock%}
-{%block body%}
+    </style>
+</head>
+<body style="font-family: 蘋果儷細宋;background-color: #F5F5F5;">
+<div id="content" style="z-index: 2;position: relative;">
   <div class="header">
       <div class="container" clearfix>
           <div class="logo">
@@ -100,22 +110,29 @@
                 <a href="http://127.0.0.1:5678/cves?file={{file}}">view CVEs</a>
             </li>
           </ul>
-          
+        </br>
       </div>
   </div>
-      <h1>python packages</h1>
-      <h2>Packages imported</h2>
+      <h1>CVEs for packages</h1>
       </br>
       <ul>
-      {% for content in contents%}
+      {% for pack in packs%}
       <li>
-          <text>{{content[0]}}</text>
-          <text>version:{{content[1]}}</text>
-          <a href="http://127.0.0.1:5678/license?pack={{content[0]}}">license</a>
-          <a href="http://127.0.0.1:5678/cve?pack={{content[0]}}">CVEs</a>
+          <text>{{pack[0]}}</text>
+          <text>version:{{pack[1]}}</text></br>
+          <ul>
+          {%for hole in holes[pack[0]]%}
+          <li>
+          {%for each in hole%}
+            <text>{{each}}</text></br>
+            {%endfor%}
+            </br>
+          </li>
+          {%endfor%}
+        </ul>
       </li>
       {% endfor %}
       </ul>
-{%endblock%}
+</div>
 </body>
 </html>
