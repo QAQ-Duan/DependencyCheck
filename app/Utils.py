@@ -62,7 +62,7 @@ def license_detail(ls):
 if __name__ == "__main__":
     # for i in package_license([("torch",None),("numpy",None)]):
     #     print(i,'\n\n')
-    for i in license_detail(['apache-2.0','bsd-new']):
-        print(i['tags'],'\n\n')
+    for i in license_detail(['mit','bsd-new']):
+        print(i['short_name'],'\n\n')
         
     
