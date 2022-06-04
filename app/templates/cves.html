@@ -1,138 +1,82 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <meta content="en-us" http-equiv="Content-Language">
-   
-   <meta name="viewport" content="width=device-width, initial-scale=0.9">
-   <title id="title">Dependency analysis</title>
-    <style>
-        h1{
-            text-align:center;
-        }
-      .header{
-            width: 100%;
-            height: 100px;
-            background-color: rgb(207, 238, 238);
-            position: relative;
-            top:-25px;
-          }
-          .container{
-            width: 1226px;
-            height: 20px;
-            margin: 0 auto;
-          }
-          .header .logo{
-            float: left;
-            margin-top: 10px;
-          }
-          .logo a{
-            display: inline;
-            width: 150px;
-            height: 150px;
-          }
-          .header .list{
-            float: center;
-            width: 820px;
-            height: 88px;
-            padding: 12px 0 0 30px;
-          }
-          clearfix::after{
-            content: '';
-            clear: both;
-            display: block;
-          }
-          a{
-            text-decoration: none;
-          }
-          .header li{
-            float: left;
-            list-style: none;
-          }
-          .list li{
-            padding: 28px 10px 38px ;
-            display: block;
-            color: rgb(68, 57, 5);
-            position:relative;
-            left:75px;
-          }
-          .content1{
-             display: block;
-            width: 223px;
-            height: 48px;
-            border: 1px solid #e0e0e0;
-            padding: 0 10px;
-            float:right;
-          }
-          .search1{
-            width: 49px;
-            height: 49px;
-            float: right;
-          } 
-          .list li:hover{
-            color: rgb(168, 81, 81);
-            font-size: larger;
-          }
-          ul::marker {
-            unicode-bidi: isolate;
-            font-variant-numeric: tabular-nums;
-            text-transform: none;
-            text-indent: 0px !important;
-            text-align: start !important;
-            text-align-last: start !important;
-        }
-    </style>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312" />
+<title>CVEs</title>
+<meta name="keywords" content="licenses,yihaowangluo" />
+<meta name="description" content="none" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/style2.css') }}"/>
 </head>
-<body style="font-family: 蘋果儷細宋;background-color: #F5F5F5;">
-<div id="content" style="z-index: 2;position: relative;">
-  <div class="header">
-      <div class="container" clearfix>
-          <div class="logo">
-              <a href="#">
-                  <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.weixiao5.com%2FUploadFiles%2FEditImage%2F202106%2F60565b2c88faad5212037ab8d26d3eed.jpg&refer=http%3A%2F%2Fwww.weixiao5.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655999006&t=9505c5f7e6a082b14d3683bc2c812b4a"
-                   width="120" height='80' alt="独家出品">
-              </a>
-          </div>
-          <ul class="list">
-              <li>
-                <a href="http://127.0.0.1:5678/">home</a>
-              </li>
-              <li>
-                  <a href="http://127.0.0.1:5678/result?file={{file}}">python packages</a>
-              </li>
-              <li>
-                  <a href="http://127.0.0.1:5678/result_java?file={{file}}">java packages</a>
-              </li>
-              <li>
-                  <a href="http://127.0.0.1:5678/licenses?file={{file}}">license</a>
-              </li>
-              <li>
-                <a href="http://127.0.0.1:5678/cves?file={{file}}">view CVEs</a>
-            </li>
-          </ul>
-        </br>
-      </div>
-  </div>
-      <h1>CVEs for packages</h1>
-      </br>
-      <ul>
-      {% for pack in packs%}
-      <li>
-          <text>{{pack[0]}}</text>
-          <text>version:{{pack[1]}}</text></br>
-          <ul>
-          {%for hole in holes[pack[0]]%}
+<body>
+<div id="outer">
+	<div id="header">
+		<h1><a href="#">CVE漏洞</a></h1>
+	</div>
+	<div id="menu">
+		<ul>
+			<li class="first"><a href="http://127.0.0.1:5678/" accesskey="1" title="">Home</a></li>
+			<li><a href="http://127.0.0.1:5678/result?file={{file}}" accesskey="2" title="">开源供应链信息</a></li>
+			<li><a href="http://127.0.0.1:5678/licenses?file={{file}}" accesskey="3" title="">许可证信息</a></li>
+			<li><a href="http://127.0.0.1:5678/cves?file={{file}}" accesskey="4" title="">CVE漏洞</a></li>
+			<li><a href="#" accesskey="5" title="">合法性介绍</a></li>
+		</ul>
+	</div>
+  <div id="content">
+    <div id="primaryContentContainer">
+			<div id="primaryContent">
+				<h2>相关CVE漏洞</h2>
+				<ul>
+          {% for pack in packs%}
           <li>
-          {%for each in hole%}
-            <text>{{each}}</text></br>
-            {%endfor%}
-            </br>
+            <h3>包：{{pack[0]}},版本:{{pack[1]}}</h3>
+            {%if has_vul[pack[0]]==true%}
+            <table>
+              <tr class="rowH">
+                <th>漏洞ID</th>
+                <th>概述</th>
+                <th>CVSS评级</th>
+              </tr>
+              {%for hole in holes[pack[0]]%}
+              <tr class="rowA">
+                <td><a href="#">{{hole[0]}}</a></td>
+                <td>{{hole[1]}}</td>
+                <td>{{hole[2]}}</br>{{hole[3]}}</td>
+              </tr>  
+              {%endfor%}
+            </table>
+            {%endif%}
           </li>
-          {%endfor%}
-        </ul>
-      </li>
-      {% endfor %}
-      </ul>
+          {% endfor %}
+				</ul>
+			</div>
+		</div>
+    <div id="secondaryContent">
+			<h3>Etiam suscipit et</h3>
+			<p>Rhoncus ac, lacinia, nisl. Aliquam gravida massa eu arcu. <a href="#">More&#8230;</a></p>
+			<h3>Fusce dolor tristique</h3>
+			<p>Sed eu eros imperdiet eros interdum blandit. Vivamus sagittis bibendum erat. Curabitur malesuada. <a href="#">More&#8230;</a></p>
+			<h3>Nunc pellentesque</h3>
+			<ul>
+				<li><a href="#">Orci nonummy fringilla</a></li>
+				<li><a href="#">Enim vivamus convallis</a></li>
+				<li><a href="#">Duis congue ultricies</a></li>
+				<li><a href="#">Purus in mollis purus</a></li>
+			</ul>
+			<p>Sed vestibulum blandit nisl. Quisque elementum convallis purus. Suspendisse potenti. Donec nulla est, laoreet quis, pellentesque in. <a href="#">More&#8230;</a></p>
+			<h3>Ipsum Dolorem</h3>
+			<ul>
+				<li><a href="#">Sagittis Bibendum Erat</a></li>
+				<li><a href="#">Malesuada Turpis</a></li>
+				<li><a href="#">Quis Gravida Massa</a></li>
+				<li><a href="#">Inerat Viverra Ornare</a></li>
+			</ul>
+			<div class="xbg"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+  <div id="footer">
+		<p>by 贪得吴彦组</p>
+	</div>    
 </div>
 </body>
 </html>
