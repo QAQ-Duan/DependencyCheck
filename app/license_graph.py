@@ -36,7 +36,9 @@ def find_path(graph, start, end, path=[]):
     if start == end:
         return path
     if start not in graph:  # 仅存在此节点 不作为弧头出现，仅作为弧尾[数据结构唐朔飞]
-        return None  # 递归结束的条件
+        return "unknown"  # 递归结束的条件
+    if end not in graph:  # 仅存在此节点 不作为弧头出现，仅作为弧尾[数据结构唐朔飞]
+        return "unknown"  # 递归结束的条件
     # print("graph[{}]:{}".format(start, graph[start]))
     for node in graph[start]:  # 依次访问start的邻接顶点node
         if node not in path:  # 同一节点在返回的路径上不会出现多次
@@ -59,8 +61,25 @@ def compatibility(license1, license2):
     
     return find_path(tmp_graph, license1, license2)
 
+# 封装函数
+# 参数 license_list，长度为n
+# list中第一个元素是项目许可证key（字符串类型），后面n-1个元素是各个包的许可证key
+# 返回值为长度为n-1的列表，代表这项目许可证和包许可证是否有冲突
+# 返回值的元素若为None，说明【有冲突】
+# 返回值元素作为"unknown"，说明许可证超出了图的范围，暂时无法检测
+# 返回值是一个列表路径，代表兼容没问题
+def project_compliance(license_list):
+    if len(license_list)<=1:
+        return None
+    project_license = license_list[0]
+    res = []
+    for i in range(len(license_list)-1):
+        tmp = compatibility(license_list[i+1], project_license)
+        res.append(tmp)
+    return res
+
 if __name__ == '__main__':
-    print(compatibility("mpl-2.0", "gpl-2.0"))
+    print(project_compliance(["mpl-2.0", "gpl-2.0","apache-2.0","bsd-new","ok"]))
     H = nx.DiGraph(graph) 
     nx.draw_circular(H, with_labels=True, font_weight='bold')
     plt.show()
